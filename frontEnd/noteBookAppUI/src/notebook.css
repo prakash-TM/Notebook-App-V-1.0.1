@@ -1,0 +1,31 @@
+.bg-color {
+    background-color: aqua;
+}
+
+.header-sty {
+    text-align: center;
+}
+
+.unOrder-style {
+    list-style: none;
+}
+
+.singleData-flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.singleData-box {
+    border: 2px solid black;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.posts-box {
+    border: 2px solid black;
+}

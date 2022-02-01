@@ -60,7 +60,7 @@ const getNotes=async(req:Request,res:Response)=>{
 }
 
 const getSingleNotes=async(req:Request,res:Response)=>{
-    const response=await notesModel.find({title:"iron man"})
+    const response=await notesModel.findOne({title:"iron man"})
     if(!response){
         res.send({message:"can't find user"})
     }
@@ -68,7 +68,7 @@ const getSingleNotes=async(req:Request,res:Response)=>{
 }
 
 const removeSingleNotes=async(req:Request,res:Response)=>{
-    const response=await notesModel.remove({title:"iron man"})
+    const response=await notesModel.findOneAndRemove({title:"iron man"})
     if(!response){
         res.send({message:"not able to delete record"})
     }

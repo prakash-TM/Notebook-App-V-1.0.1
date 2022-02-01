@@ -49,11 +49,11 @@ const getNotebook=async(req:Request,res:Response)=>{
 const getSingleNotebook=async(req:Request,res:Response)=>{
     const{title}=req.query
     const search={title}
-    const response=await noteBookModel.find(search)
+    const response=await noteBookModel.findOne(search)
     if(!response){
         res.send({message:"can't find user"})
     }
-    res.send(response)
+    res.send([response])
 }
 
 //remove single
@@ -61,7 +61,7 @@ const getSingleNotebook=async(req:Request,res:Response)=>{
 const removeSingleNotebook=async(req:Request,res:Response)=>{
     const{title}=req.query
     const search={title}
-    const response=await noteBookModel.remove(search)
+    const response=await noteBookModel.findOneAndRemove(search)
     if(!response){
         res.send({message:"not able to delete record"})
     }
@@ -85,7 +85,7 @@ const updateSingleNotebook=async(req:Request,res:Response)=>{
     if(!response){
         res.send({message:"not able to update"})
     }
-    res.send({response})
+    res.send(response)
 }
 
 // update all 
@@ -95,7 +95,7 @@ const updateAllNotebook=async(req:Request,res:Response)=>{
     if(!response){
         res.send({message:"not able to update"})
     }
-    res.send({response})
+    res.send(response)
 }
 
 export{addNewNotebook,getNotebook,getSingleNotebook,removeSingleNotebook,removeNotebook,updateSingleNotebook,updateAllNotebook}

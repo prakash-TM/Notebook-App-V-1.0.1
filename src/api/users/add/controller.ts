@@ -75,7 +75,7 @@ const getUser=async(req:Request,res:Response)=>{
 }
 
 const getSingleUser=async(req:Request,res:Response)=>{
-    const response=await userModel.find({name:"prakash"})
+    const response=await userModel.findOne({name:"prakash"})
     if(!response){
         res.send({message:"can't find user"})
     }
@@ -83,7 +83,7 @@ const getSingleUser=async(req:Request,res:Response)=>{
 }
 
 const removeSingleUser=async(req:Request,res:Response)=>{
-    const response=await userModel.remove({name:"prakash"})
+    const response=await userModel.findOneAndRemove({name:"prakash"})
     if(!response){
         res.send({message:"not able to delete record"})
     }

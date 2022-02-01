@@ -1,18 +1,17 @@
-import "./App.css";
+import "./notebook.css";
 import * as React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { time } from "console";
 
 function Notebook() {
   const [posts, setPosts] = useState([]);
+  const [singleData, setSingleData] = useState([]);
   const [title, setTitle] = useState("");
   const [des, setDes] = useState("");
   const [id, setID] = useState("");
   const [searchWord, setSearchWord] = useState("");
-  const [singleData, setSingleData] = useState([]);
   const [deleteWord, setDeleteWord] = useState([]);
-  const [deleteRes,setDeleteRes]=useState([])
+  const [deleteRes, setDeleteRes] = useState([]);
 
   const _handleTitle = (e: any) => {
     setTitle(e.target.value);
@@ -47,7 +46,7 @@ function Notebook() {
       .catch((err) => {
         console.log(err);
       });
-      alert("record is updated successfully & refresh the once")
+    alert("record is updated successfully & refresh the once");
   };
 
   const _handleOut = () => {
@@ -71,57 +70,103 @@ function Notebook() {
         setSingleData(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        alert(err);
       });
   };
   const _handleDeleteOut = () => {
-    console.log(deleteWord)
     axios
       .delete("http://localhost:8000/removeSingleNotebook", {
         params: { title: deleteWord },
       })
       .then((res) => {
-        console.log(res.data.message)
-        setDeleteRes(res.data)
+        console.log(res.data.message);
+        setDeleteRes(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-      alert("records was deleted successfully & refresh the once")
+    alert("records was deleted successfully & refresh the once");
   };
 
   return (
-    <div>
-      <div>
-        <label htmlFor="title">Title </label>
-        <input type="text" onChange={_handleTitle} />
-        <label htmlFor="description">Description </label>
-        <input type="text" onChange={_handleDes} />
-        <label htmlFor="userId">UserID </label>
-        <input type="text" onChange={_handleID} />
-        <button onClick={_handleBtn}>Submit</button>
-      </div>
-      <label htmlFor="search word">Enter the title for search</label>
-      <input type="text" onChange={_handleSearch} />
-      <button onClick={_handleGetBtn}>get single data</button>
-      <div>
-        {singleData.map((item: any, index: any) => (
-          <div key={index}>
-            <h3>title : {item.title}</h3>
-            <p>description : {item.description}</p>
-          </div>
-        ))}
+    <div className="bg-color">
+      <div className="header-sty">
+        <h2>Notebook App</h2>
       </div>
       <div>
-        <label htmlFor="delete word">Enter the title for delete</label>
-        <input type="text" onChange={_handleDelete} />
-        <button onClick={_handleDeleteOut}>delete data</button>
+        <ul className="unOrder-style">
+          <li>
+            <label htmlFor="title">Title </label>
+            <input
+              style={{ marginLeft: "51px" }}
+              type="text"
+              onChange={_handleTitle}
+            />
+          </li>
+          <li>
+            <label htmlFor="description">Description </label>
+            <input type="text" onChange={_handleDes} />
+          </li>
+          <li>
+            <label htmlFor="userId">UserID </label>
+            <input
+              style={{ marginLeft: "33px" }}
+              type="text"
+              onChange={_handleID}
+            />
+          </li>
+          <br />
+          <li>
+            <button onClick={_handleBtn}>Submit</button>
+          </li>
+        </ul>
+      </div>
+      <br />
+      <div className="singleData-flex">
+        <div>
+          <ul className="unOrder-style">
+            <li>
+              <label htmlFor="search word">Enter the title for search</label>
+              <input
+                style={{ marginLeft: "20px" }}
+                type="text"
+                onChange={_handleSearch}
+              />
+            </li>
+            <br />
+            <li>
+              <button onClick={_handleGetBtn}>Get single data</button>
+            </li>
+          </ul>
+        </div>
+
+        <div className="singleData-box">
+          {singleData.map((item: any, index: any) => (
+            <div style={{ padding: "0 15px" }} key={index}>
+              <h3>title : {item.title}</h3>
+              <p>description : {item.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
       <div>
+        <ul className="unOrder-style">
+          <li>
+            <label htmlFor="delete word">Enter the title for delete</label>
+            <input style={{ marginLeft: "22px" }} type="text" onChange={_handleDelete} />
+          </li>
+          <br />
+          <li>
+            <button onClick={_handleDeleteOut}>delete data</button>
+          </li>
+        </ul>
+      </div>
+      <div>
+      <div style={{textAlign:"center"}}>
         <button onClick={_handleOut}>get All Out</button>
       </div>
 
-      <div>
+      <div className="posts-box">
         {posts.map((item: any, index: any) => (
           <div key={index}>
             <h3>title : {item.title}</h3>
@@ -129,6 +174,9 @@ function Notebook() {
           </div>
         ))}
       </div>
+
+      </div>
+      
       {/* {handleData(posts)} */}
     </div>
   );
