@@ -1,7 +1,9 @@
 import "./notebook.css";
-import * as React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import PostReq from "../requests/post"
+import GetAllReq from "../requests/getAll"
+import GetSingleReq from "../requests/getSingle"
+import DeleteSingleReq from "../requests/deleteSingle"
 
 function Notebook() {
   const [posts, setPosts] = useState([]);
@@ -13,78 +15,67 @@ function Notebook() {
   const [deleteWord, setDeleteWord] = useState([]);
   const [deleteRes, setDeleteRes] = useState([]);
 
-  const _handleTitle = (e: any) => {
+  const _handleTitleInp = (e: any) => {
     setTitle(e.target.value);
   };
-  const _handleDes = (e: any) => {
+  const _handleDesInp = (e: any) => {
     setDes(e.target.value);
   };
-  const _handleID = (e: any) => {
+  const _handleIDInp = (e: any) => {
     setID(e.target.value);
   };
 
-  const _handleSearch = (e: any) => {
+  const _handleDeleteTitleSearchInp = (e: any) => {
     setSearchWord(e.target.value);
   };
-  const _handleDelete = (e: any) => {
+  const _handleDeleteInp = (e: any) => {
     setDeleteWord(e.target.value);
   };
 
-  const _handleBtn = () => {
-    console.log(title, des, id);
 
-    const data = {
+useEffect(()=>{
+  _handleAllDataOutBtn()
+})
+
+//Adding Info to DB
+  const _handlePost = async() => {
+    const postApi="notebook"
+      const data = {
       title: title,
       description: des,
       userId: id,
     };
-    axios
-      .post("http://localhost:8000/notebook", data)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    alert("record is updated successfully & refresh the once");
+    const postReq=await PostReq(data,postApi)
+    // axios
+    //   .post("http://ec2-13-127-246-39.ap-south-1.compute.amazonaws.com:8000/notebook", data)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     _handleOut()
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // alert("record is updated successfully & refresh the once");
   };
 
-  const _handleOut = () => {
-    axios
-      .get("http://localhost:8000/getNotebook")
-      .then((res) => {
-        console.log(res.data);
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+// Get all data from DB
+  const _handleAllDataOutBtn = async() => {
+    console.log("inside handle out")
+    const getAllApi="getNotebook"
+    var getAll = await GetAllReq(getAllApi)
+    setPosts(getAll.data);
   };
-
-  const _handleGetBtn = () => {
-    const url = "http://localhost:8000/getSingleNotebook";
-    axios
-      .get(url, { params: { title: searchWord } })
-      .then((res) => {
-        console.log(res.data);
-        setSingleData(res.data);
-      })
-      .catch((err) => {
-        alert(err);
-      });
+// Get single data from DB
+  const _handleSingleDataOutBtn = async() => {
+    const getSingleApi ="getSingleNotebook"
+    const getSingle=await GetSingleReq(searchWord,getSingleApi)
+    setSingleData(getSingle.data);
   };
-  const _handleDeleteOut = () => {
-    axios
-      .delete("http://localhost:8000/removeSingleNotebook", {
-        params: { title: deleteWord },
-      })
-      .then((res) => {
-        console.log(res.data.message);
-        setDeleteRes(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+// Delete Single data in DB
+  const _handleDeleteSingleDataBtn = async() => {
+    const deleteSingleApi="removeSingleNotebook"
+    const deleteSingle=await DeleteSingleReq(deleteWord,deleteSingleApi)
+    setDeleteRes(deleteSingle.data)
     alert("records was deleted successfully & refresh the once");
   };
 
@@ -94,30 +85,32 @@ function Notebook() {
         <h2>Notebook App</h2>
       </div>
       <div>
+        
         <ul className="unOrder-style">
+        <h3>Add Data</h3>
           <li>
             <label htmlFor="title">Title </label>
             <input
               style={{ marginLeft: "51px" }}
               type="text"
-              onChange={_handleTitle}
+              onChange={_handleTitleInp}
             />
           </li>
           <li>
             <label htmlFor="description">Description </label>
-            <input type="text" onChange={_handleDes} />
+            <input type="text" onChange={_handleDesInp} />
           </li>
           <li>
             <label htmlFor="userId">UserID </label>
             <input
               style={{ marginLeft: "33px" }}
               type="text"
-              onChange={_handleID}
+              onChange={_handleIDInp}
             />
           </li>
           <br />
           <li>
-            <button onClick={_handleBtn}>Submit</button>
+            <button onClick={_handlePost}>Submit</button>
           </li>
         </ul>
       </div>
@@ -125,17 +118,18 @@ function Notebook() {
       <div className="singleData-flex">
         <div>
           <ul className="unOrder-style">
+          <h3>Search Data</h3>
             <li>
               <label htmlFor="search word">Enter the title for search</label>
               <input
                 style={{ marginLeft: "20px" }}
                 type="text"
-                onChange={_handleSearch}
+                onChange={_handleDeleteTitleSearchInp}
               />
             </li>
             <br />
             <li>
-              <button onClick={_handleGetBtn}>Get single data</button>
+              <button onClick={_handleSingleDataOutBtn}>Get single data</button>
             </li>
           </ul>
         </div>
@@ -143,34 +137,37 @@ function Notebook() {
         <div className="singleData-box">
           {singleData.map((item: any, index: any) => (
             <div style={{ padding: "0 15px" }} key={index}>
-              <h3>title : {item.title}</h3>
-              <p>description : {item.description}</p>
+              <h3>Title : {item.title}</h3>
+              <p style={{paddingLeft:"20px"}}>Description : {item.description}</p>
             </div>
           ))}
         </div>
       </div>
       <div>
         <ul className="unOrder-style">
+        <h3>Delete Data</h3>
           <li>
             <label htmlFor="delete word">Enter the title for delete</label>
-            <input style={{ marginLeft: "22px" }} type="text" onChange={_handleDelete} />
+            <input style={{ marginLeft: "22px" }} type="text" onChange={_handleDeleteInp} />
           </li>
           <br />
           <li>
-            <button onClick={_handleDeleteOut}>delete data</button>
+            <button onClick={_handleDeleteSingleDataBtn}>Delete Data</button>
           </li>
         </ul>
       </div>
       <div>
+      
       <div style={{textAlign:"center"}}>
-        <button onClick={_handleOut}>get All Out</button>
+      <h3>--Display Area--</h3>
+        <button onClick={_handleAllDataOutBtn}>Get All Out</button>
       </div>
 
       <div className="posts-box">
         {posts.map((item: any, index: any) => (
           <div key={index}>
-            <h3>title : {item.title}</h3>
-            <p>description : {item.description}</p>
+            <h3>Title : {item.title}</h3>
+            <p style={{paddingLeft:"30px"}}>Description : {item.description}</p>
           </div>
         ))}
       </div>
