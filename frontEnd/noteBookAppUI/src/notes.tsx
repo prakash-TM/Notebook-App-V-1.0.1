@@ -6,7 +6,7 @@ function Notes() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios("http://localhost:8000/getNotes")
+    axios("http://ec2-13-232-172-209.ap-south-1.compute.amazonaws.com:8000/getNotes")
       .then((res) => {
         setLoading(false);
         if (res.data) {

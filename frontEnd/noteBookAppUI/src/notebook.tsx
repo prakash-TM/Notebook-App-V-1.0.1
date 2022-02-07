@@ -39,7 +39,7 @@ function Notebook() {
       userId: id,
     };
     axios
-      .post("http://localhost:8000/notebook", data)
+      .post("http://ec2-13-232-172-209.ap-south-1.compute.amazonaws.com:8000/notebook", data)
       .then((res) => {
         console.log(res.data);
       })
@@ -51,7 +51,7 @@ function Notebook() {
 
   const _handleOut = () => {
     axios
-      .get("http://localhost:8000/getNotebook")
+      .get("http://ec2-13-232-172-209.ap-south-1.compute.amazonaws.com:8000/getNotebook")
       .then((res) => {
         console.log(res.data);
         setPosts(res.data);
@@ -62,7 +62,7 @@ function Notebook() {
   };
 
   const _handleGetBtn = () => {
-    const url = "http://localhost:8000/getSingleNotebook";
+    const url = "http://ec2-13-232-172-209.ap-south-1.compute.amazonaws.com:8000/getSingleNotebook";
     axios
       .get(url, { params: { title: searchWord } })
       .then((res) => {
@@ -75,7 +75,7 @@ function Notebook() {
   };
   const _handleDeleteOut = () => {
     axios
-      .delete("http://localhost:8000/removeSingleNotebook", {
+      .delete("http://ec2-13-232-172-209.ap-south-1.compute.amazonaws.com:8000/removeSingleNotebook", {
         params: { title: deleteWord },
       })
       .then((res) => {
