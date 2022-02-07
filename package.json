@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon index.ts"
+        "start": "nodemon build/index.js",
+        "build": "tsc ",
+        "deploy": "tsc && nodemon build/index.js"
     },
     "author": "Prakash TM",
     "license": "ISC",

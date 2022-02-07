@@ -2,10 +2,10 @@ const Mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 8000;
-import noteBookRouter from "./src/api/notebooks/add/routes";
-import notesRouter from "./src/api/notes/add/routes"
-import userRouter from "./src/api/users/add/routes"
-import cors from "cors"
+import noteBookRouter from "./api/notebooks/add/routes";
+import notesRouter from "./api/notes/add/routes"
+import userRouter from "./api/users/add/routes"
+import * as cors from "cors"
 
 // Creating db
 const initConnection = async() => {
