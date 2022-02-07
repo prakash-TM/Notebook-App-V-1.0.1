@@ -1,10 +1,10 @@
 import * as Express from "express"
-import {Router} from "express"
-import { Request,Response } from "express"
+// import {Router} from "express"
+// import { Request,Response } from "express"
 import { addNewUser,getUser,getSingleUser,removeSingleUser,removeUser,updateSingleUser,updateAllUser } from "./controller"
 
 
-const router:Router=Express.Router()
+const router=Express.Router()
 router.post("/user",addNewUser)
 router.get("/getUser",getUser)
 router.get("/getSingleUser",getSingleUser)

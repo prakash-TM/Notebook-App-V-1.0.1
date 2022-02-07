@@ -1,9 +1,10 @@
 import * as Express from "express";
-import { Router } from "express"; // Not required
+//import { Router } from "express"; // Not required
 import { addNewNotebook,getNotebook,getSingleNotebook,removeSingleNotebook,removeNotebook,updateSingleNotebook,updateAllNotebook } from "./controller";
 
-// Initialising the router
-const router: Router = Express.Router();
+// Initializing the router
+//const router: Router = Express.Router();
+const router = Express.Router();
 
 router.post("/notebook", addNewNotebook);
 router.get("/getNotebook",getNotebook)
