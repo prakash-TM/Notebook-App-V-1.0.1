@@ -7,7 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon build/index.js",
         "build": "tsc ",
-        "deploy": "tsc && nodemon build/index.js"
+        "deploy": "tsc && nodemon build/index.js",
+        "testRun": "nodemon src/index.ts"
     },
     "author": "Prakash TM",
     "license": "ISC",
@@ -19,7 +20,8 @@
         "cors": "^2.8.5",
         "express": "^4.17.2",
         "mongoose": "^6.1.7",
-        "nodemon": "^2.0.15"
+        "nodemon": "^2.0.15",
+        "path": "^0.12.7"
     },
     "devDependencies": {
         "@types/cors": "^2.8.12",
