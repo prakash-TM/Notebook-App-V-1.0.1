@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc ",
-        "deploy": "tsc && vite build",
+        "deploy": "tsc && tsc && nodemon build/index.js",
         "preview": "vite preview"
     },
     "dependencies": {
